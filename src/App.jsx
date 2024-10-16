@@ -1,4 +1,8 @@
 import PlusIcon from "@/assets/plus.svg?react";
+import DeleteIcon from "@/assets/delete.svg?react";
+import EditIcon from "@/assets/edit.svg?react";
+import ConfirmIcon from "@/assets/confirm.svg?react";
+
 import { useState } from "react";
 
 export const App = () => {
@@ -6,7 +10,10 @@ export const App = () => {
   const [inputValue, setInputValue] = useState("");
 
   const handleAddTask = () => {
-    setTasks([...tasks, { name: inputValue, id: crypto.randomUUID() }]);
+    setTasks([
+      ...tasks,
+      { name: inputValue, id: crypto.randomUUID(), done: false },
+    ]);
     setInputValue("");
   };
 
@@ -17,6 +24,17 @@ export const App = () => {
       }),
     );
   };
+
+  const handleTaskDone = () => {
+    setTasks([{ done: true }]);
+  };
+
+  const doneTasks = tasks.filter((task) => {
+    return task.done;
+  });
+
+  console.log({ doneTasks });
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-main-bg">
       <div className="flex min-w-[580px] flex-col justify-center gap-14 rounded-3xl bg-secondary-bg px-12 py-12">
@@ -49,12 +67,22 @@ export const App = () => {
               <>
                 <div
                   key={task.id}
-                  className="bg-card flex justify-between rounded-[10px] p-5 text-main-foreground"
+                  className="flex justify-between rounded-[10px] bg-card p-5 text-main-foreground"
                 >
                   {task.name}
-                  <button onClick={() => handleDeleteTask(task.id)}>
-                    delete
-                  </button>
+                  <div className="flex gap-2">
+                    <button onClick={() => handleDeleteTask(task.id)}>
+                      <ConfirmIcon className="size-5"></ConfirmIcon>
+                    </button>
+
+                    <button>
+                      <EditIcon className="size-5"></EditIcon>
+                    </button>
+
+                    <button onClick={() => handleTaskDone()}>
+                      <DeleteIcon className="size-5"></DeleteIcon>
+                    </button>
+                  </div>
                 </div>
               </>
             );
