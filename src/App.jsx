@@ -5,9 +5,10 @@ import ConfirmIcon from "@/assets/confirm.svg?react";
 import CancelIcon from "@/assets/cancel.svg?react";
 
 import { useState } from "react";
+import { useLocalStorage } from "usehooks-ts";
 
 export const App = () => {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useLocalStorage("tasks", []);
   const [inputValue, setInputValue] = useState("");
   const [editingTaskId, setEditingTaskId] = useState();
 
