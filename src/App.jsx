@@ -16,6 +16,8 @@ export const App = () => {
   const [inputValue, setInputValue] = useState("");
   const [editingTaskId, setEditingTaskId] = useState();
 
+  const isClear = inputValue === "";
+
   const handleAddTask = () => {
     setTasks([
       ...tasks,
@@ -79,12 +81,18 @@ export const App = () => {
             className="h-full flex-1 rounded-[10px] border border-main-foreground bg-transparent px-3.5 placeholder:text-zinc-500 focus:outline-none"
           />
 
-          <button
-            onClick={handleAddTask}
-            className="flex h-full w-10 items-center justify-center rounded-[10px] bg-main-foreground hover:opacity-90"
-          >
-            <PlusIcon className="size-7"></PlusIcon>
-          </button>
+          {isClear ? (
+            <button className="flex h-full w-10 items-center justify-center rounded-[10px] bg-main-foreground opacity-70">
+              <PlusIcon className="size-7"></PlusIcon>
+            </button>
+          ) : (
+            <button
+              onClick={handleAddTask}
+              className="flex h-full w-10 items-center justify-center rounded-[10px] bg-main-foreground hover:opacity-90"
+            >
+              <PlusIcon className="size-7"></PlusIcon>
+            </button>
+          )}
         </div>
 
         <div className="flex flex-col gap-4">
