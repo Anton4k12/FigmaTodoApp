@@ -18,7 +18,8 @@ export const App = () => {
 
   const isClear = inputValue === "";
 
-  const handleAddTask = () => {
+  const handleSubmitTask = (e) => {
+    e.preventDefault();
     setTasks([
       ...tasks,
       { name: inputValue, id: crypto.randomUUID(), done: false },
@@ -72,7 +73,10 @@ export const App = () => {
   return (
     <div className="relative flex min-h-screen items-center justify-center bg-main-bg">
       <div className="flex min-w-[580px] flex-col justify-center gap-14 rounded-3xl bg-secondary-bg px-12 py-12">
-        <div className="flex h-10 w-full items-center gap-2.5">
+        <form
+          onSubmit={handleSubmitTask}
+          className="flex h-10 w-full items-center gap-2.5"
+        >
           <input
             onChange={(e) => setInputValue(e.target.value)}
             type="text"
@@ -80,20 +84,14 @@ export const App = () => {
             placeholder="Add a new task"
             className="h-full flex-1 rounded-[10px] border border-main-foreground bg-transparent px-3.5 placeholder:text-zinc-500 focus:outline-none"
           />
-
-          {isClear ? (
-            <button className="flex h-full w-10 items-center justify-center rounded-[10px] bg-main-foreground opacity-70">
-              <PlusIcon className="size-7"></PlusIcon>
-            </button>
-          ) : (
-            <button
-              onClick={handleAddTask}
-              className="flex h-full w-10 items-center justify-center rounded-[10px] bg-main-foreground hover:opacity-90"
-            >
-              <PlusIcon className="size-7"></PlusIcon>
-            </button>
-          )}
-        </div>
+          <button
+            disabled={isClear}
+            type="submit"
+            className="flex h-full w-10 items-center justify-center rounded-[10px] bg-main-foreground hover:opacity-90 disabled:opacity-70"
+          >
+            <PlusIcon className="size-7"></PlusIcon>
+          </button>
+        </form>
 
         <div className="flex flex-col gap-4">
           <div>
@@ -144,7 +142,7 @@ export const App = () => {
         )}
       </div>
 
-      <div className="absolute bottom-4 left-1/2 flex w-fit -translate-x-1/2 items-center bg-black text-xs text-white/40">
+      <div className="absolute bottom-4 left-1/2 flex w-fit -translate-x-1/2 items-center text-xs text-white/40">
         <div className="flex items-center gap-2">
           <div className="flex gap-1">
             <div> made by </div>
